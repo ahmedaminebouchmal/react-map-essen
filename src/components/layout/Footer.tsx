@@ -7,8 +7,7 @@ import {
   IconButton, 
   Collapse,
   Grid,
-  Link,
-  Tooltip
+  Link
 } from '@mui/material';
 import {
   KeyboardArrowUp as ArrowUpIcon,
@@ -37,98 +36,31 @@ const Footer = () => {
         mt: 'auto'
       }}
     >
-      {/* Visible handle for expanding/collapsing */}
-      <Tooltip title={expanded ? "Show less" : "Show more"}>
-        <Box
-          onClick={toggleFooter}
-          sx={{
-            position: 'absolute',
-            top: -32,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            cursor: 'pointer',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: '#1a237e',
-            borderRadius: '8px 8px 0 0',
-            padding: '4px 16px',
-            zIndex: 1,
-            '&:hover': {
-              backgroundColor: '#283593',
-            },
-          }}
-        >
-          <Typography variant="caption" sx={{ mb: 0.5 }}>
-            {expanded ? 'Hide Details' : 'Show Details'}
-          </Typography>
-          {expanded ? <ArrowDownIcon /> : <ArrowUpIcon />}
-        </Box>
-      </Tooltip>
-
-      {/* Main content */}
       <Collapse in={expanded}>
-        <Container maxWidth="lg" sx={{ py: 3 }}>
-          <Grid container spacing={3}>
+        <Container maxWidth="lg" sx={{ py: 1.5 }}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 600,
-                  mb: 2,
-                  position: 'relative',
-                  display: 'inline-block',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: 0,
-                    width: '40%',
-                    height: '2px',
-                    backgroundColor: '#fff'
-                  }
-                }}
-              >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
                 About Developer
               </Typography>
-              <Typography variant="body2" sx={{ mb: 2, lineHeight: 1.6 }}>
-                Created with passion by Ahmed Amine Bouchmal. Specializing in interactive mapping solutions and modern web applications.
+              <Typography variant="body2" sx={{ lineHeight: 1.4, fontSize: '0.875rem' }}>
+                Created with passion by Ahmed Amine Bouchmal.
               </Typography>
             </Grid>
             
             <Grid item xs={12} md={4}>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 600,
-                  mb: 2,
-                  position: 'relative',
-                  display: 'inline-block',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: 0,
-                    width: '40%',
-                    height: '2px',
-                    backgroundColor: '#fff'
-                  }
-                }}
-              >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
                 Contact
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                <EmailIcon sx={{ mr: 1, fontSize: 20 }} />
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <EmailIcon sx={{ mr: 1, fontSize: 16 }} />
                 <Link 
                   href="mailto:bouchmalaabesp@gmail.com"
                   color="inherit"
                   sx={{ 
                     textDecoration: 'none',
-                    '&:hover': { 
-                      textDecoration: 'underline',
-                      color: '#90caf9'
-                    },
-                    transition: 'color 0.3s ease'
+                    fontSize: '0.875rem',
+                    '&:hover': { color: '#90caf9' }
                   }}
                 >
                   bouchmalaabesp@gmail.com
@@ -137,52 +69,33 @@ const Footer = () => {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              <Typography 
-                variant="h6" 
-                sx={{ 
-                  fontWeight: 600,
-                  mb: 2,
-                  position: 'relative',
-                  display: 'inline-block',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -8,
-                    left: 0,
-                    width: '40%',
-                    height: '2px',
-                    backgroundColor: '#fff'
-                  }
-                }}
-              >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 0.5 }}>
                 Connect
               </Typography>
-              <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ display: 'flex', gap: 1 }}>
                 <IconButton 
+                  size="small"
                   color="inherit"
                   sx={{ 
-                    transition: 'all 0.3s ease',
                     '&:hover': { 
-                      transform: 'translateY(-3px)',
                       backgroundColor: 'rgba(255,255,255,0.1)',
                       color: '#90caf9'
                     }
                   }}
                 >
-                  <GitHubIcon />
+                  <GitHubIcon sx={{ fontSize: 18 }} />
                 </IconButton>
                 <IconButton 
+                  size="small"
                   color="inherit"
                   sx={{ 
-                    transition: 'all 0.3s ease',
                     '&:hover': { 
-                      transform: 'translateY(-3px)',
                       backgroundColor: 'rgba(255,255,255,0.1)',
                       color: '#90caf9'
                     }
                   }}
                 >
-                  <LinkedInIcon />
+                  <LinkedInIcon sx={{ fontSize: 18 }} />
                 </IconButton>
               </Box>
             </Grid>
@@ -190,26 +103,42 @@ const Footer = () => {
         </Container>
       </Collapse>
 
-      {/* Always visible footer bar */}
       <Box 
         sx={{ 
-          py: 2.5, 
+          height: '24px',
           backgroundColor: 'rgba(0,0,0,0.2)',
           borderTop: expanded ? '1px solid rgba(255,255,255,0.1)' : 'none',
-          position: 'relative', 
-          zIndex: 0 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 1
         }}
       >
-        <Typography 
-          variant="body2" 
-          align="center"
+        <IconButton
+          size="small"
+          onClick={toggleFooter}
           sx={{
-            fontWeight: 500,
-            letterSpacing: '0.5px',
-            pt: 1 
+            color: 'white',
+            padding: 0,
+            '&:hover': {
+              backgroundColor: 'rgba(255,255,255,0.1)'
+            },
+            '& .MuiSvgIcon-root': {
+              fontSize: '0.9rem'
+            }
           }}
         >
-          &copy; {new Date().getFullYear()} Map Essen by Ahmed Amine Bouchmal. All rights reserved.
+          {expanded ? <ArrowDownIcon /> : <ArrowUpIcon />}
+        </IconButton>
+        
+        <Typography 
+          variant="caption"
+          sx={{
+            fontSize: '0.75rem',
+            opacity: 0.9
+          }}
+        >
+          &copy; {new Date().getFullYear()} Map Essen
         </Typography>
       </Box>
     </Paper>

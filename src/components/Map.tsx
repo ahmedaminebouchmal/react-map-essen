@@ -1,30 +1,49 @@
+import { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: '/node_modules/leaflet/dist/images/marker-icon-2x.png',
-  iconUrl: '/node_modules/leaflet/dist/images/marker-icon.png',
-  shadowUrl: '/node_modules/leaflet/dist/images/marker-shadow.png',
+// Fix for default marker icons
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+  iconUrl: icon,
+  shadowUrl: iconShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41]
 });
 
+L.Marker.prototype.options.icon = DefaultIcon;
+
 const Map = () => {
-  const position: [number, number] = [51.4556, 7.0116];
+  useEffect(() => {
+    // Trigger resize event after map is mounted to ensure proper sizing
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+  }, []);
 
   return (
     <MapContainer 
-      center={position} 
+      center={[51.4556, 7.0116]} 
       zoom={13} 
-      style={{ width: '100%', height: '100%' }}
+      style={{ 
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0
+      }}
     >
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={position}>
+      <Marker position={[51.4556, 7.0116]}>
         <Popup>
-          Welcome to Essen!
+          Essen City Center
         </Popup>
       </Marker>
     </MapContainer>
