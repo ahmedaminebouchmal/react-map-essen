@@ -27,7 +27,6 @@ import {
 
 interface SidebarProps {
   open: boolean;
-  onClose: () => void;
 }
 
 const menuItems = [
@@ -56,7 +55,7 @@ const menuItems = [
   { text: 'Post Offices', icon: <LocalPostOffice /> }
 ];
 
-const Sidebar = ({ open, onClose }: SidebarProps) => {
+const Sidebar = ({ open }: SidebarProps) => {
   return (
     <Drawer
       variant="persistent"

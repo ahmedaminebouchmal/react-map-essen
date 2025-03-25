@@ -42,7 +42,7 @@ function App() {
           top: 0,
           zIndex: 1100
         }}>
-          <Sidebar open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+          <Sidebar open={isSidebarOpen} />
         </Box>
         
         <Box component="main" sx={{ 
