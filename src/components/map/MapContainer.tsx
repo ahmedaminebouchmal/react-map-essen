@@ -3,22 +3,9 @@ import { MapContainer as LeafletMapContainer, TileLayer, ZoomControl } from 'rea
 import 'leaflet/dist/leaflet.css';
 import { useMapConfig } from './hooks/useMapConfig';
 import MapControls from './controls/MapControls';
-import MarkerLayer from './layers/MarkerLayer';
+import MeetingMap from './MeetingMap';
 import { defaultMapConfig } from './config/mapConfig';
-import L from 'leaflet';
-
-// Fix for default marker icons
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41]
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
+import './utils/leafletIcons';  // Initialize Leaflet icons
 
 const MapContainer = () => {
   const { config } = useMapConfig();
@@ -52,7 +39,7 @@ const MapContainer = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapControls />
-      <MarkerLayer />
+      <MeetingMap />
     </LeafletMapContainer>
   );
 };
