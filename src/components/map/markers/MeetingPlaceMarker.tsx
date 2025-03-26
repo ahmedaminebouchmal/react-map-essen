@@ -1,6 +1,6 @@
 import { Marker, Popup } from 'react-leaflet';
 import { MeetingPlace } from '../../../services/geoJsonService';
-import { Card, CardContent, Typography, Link, Box, Chip, Divider, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Link, Box, Chip, Divider, Grid, useTheme, useMediaQuery } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
@@ -13,6 +13,9 @@ interface MeetingPlaceMarkerProps {
 }
 
 export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Marker 
       position={place.coordinates} 
@@ -20,28 +23,35 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
     >
       <Popup maxWidth={500}>
         <Card sx={{ 
-          width: '450px',
+          width: isMobile ? '280px' : '450px',
           borderRadius: 2,
           overflow: 'hidden',
           boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
           '& .MuiCardContent-root': {
-            padding: 2,
+            padding: theme.spacing(isMobile ? 1 : 2),
           }
         }}>
           <Box sx={{ 
             bgcolor: 'primary.main', 
             color: 'white',
-            p: 1.5,
+            p: theme.spacing(isMobile ? 1 : 1.5),
             borderBottom: '4px solid',
             borderColor: 'primary.dark'
           }}>
-            <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+            <Typography 
+              variant={isMobile ? "subtitle1" : "h6"} 
+              component="div" 
+              sx={{ 
+                fontWeight: 'bold',
+                fontSize: isMobile ? '1rem' : '1.25rem'
+              }}
+            >
               {place.name}
             </Typography>
           </Box>
           <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
+            <Grid container spacing={isMobile ? 1 : 2}>
+              <Grid item xs={12} sm={6}>
                 <Box sx={{ 
                   display: 'flex', 
                   alignItems: 'flex-start', 
@@ -50,14 +60,19 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                   borderRadius: 1,
                   height: '100%'
                 }}>
-                  <LocationOnIcon sx={{ mr: 1, mt: 0.5, color: 'primary.main' }} />
+                  <LocationOnIcon sx={{ 
+                    mr: 1, 
+                    mt: 0.5, 
+                    color: 'primary.main',
+                    fontSize: isMobile ? '1.2rem' : '1.5rem'
+                  }} />
                   <Typography variant="body2">
                     {place.address.street},<br />
                     {place.address.postalCode} {place.address.district}
                   </Typography>
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   {place.contact.phone && (
                     <Box sx={{ 
@@ -65,16 +80,21 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                       alignItems: 'center',
                       transition: 'transform 0.2s',
                       '&:hover': {
-                        transform: 'translateX(8px)'
+                        transform: isMobile ? 'none' : 'translateX(8px)'
                       }
                     }}>
-                      <PhoneIcon sx={{ mr: 1, fontSize: '1rem', color: 'success.main' }} />
+                      <PhoneIcon sx={{ 
+                        mr: 1, 
+                        fontSize: isMobile ? '1.2rem' : '1.5rem', 
+                        color: 'success.main' 
+                      }} />
                       <Link 
                         href={`tel:${place.contact.phone}`} 
                         underline="none"
                         sx={{
                           color: 'success.main',
-                          fontSize: '0.875rem',
+                          fontSize: isMobile ? '0.8rem' : '0.875rem',
+                          wordBreak: 'break-word',
                           '&:hover': {
                             color: 'success.dark'
                           }
@@ -91,16 +111,21 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                       alignItems: 'center',
                       transition: 'transform 0.2s',
                       '&:hover': {
-                        transform: 'translateX(8px)'
+                        transform: isMobile ? 'none' : 'translateX(8px)'
                       }
                     }}>
-                      <EmailIcon sx={{ mr: 1, fontSize: '1rem', color: 'info.main' }} />
+                      <EmailIcon sx={{ 
+                        mr: 1, 
+                        fontSize: isMobile ? '1.2rem' : '1.5rem', 
+                        color: 'info.main' 
+                      }} />
                       <Link 
                         href={`mailto:${place.contact.email}`} 
                         underline="none"
                         sx={{
                           color: 'info.main',
-                          fontSize: '0.875rem',
+                          fontSize: isMobile ? '0.8rem' : '0.875rem',
+                          wordBreak: 'break-word',
                           '&:hover': {
                             color: 'info.dark'
                           }
@@ -117,10 +142,14 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                       alignItems: 'center',
                       transition: 'transform 0.2s',
                       '&:hover': {
-                        transform: 'translateX(8px)'
+                        transform: isMobile ? 'none' : 'translateX(8px)'
                       }
                     }}>
-                      <LanguageIcon sx={{ mr: 1, fontSize: '1rem', color: 'primary.main' }} />
+                      <LanguageIcon sx={{ 
+                        mr: 1, 
+                        fontSize: isMobile ? '1.2rem' : '1.5rem', 
+                        color: 'primary.main' 
+                      }} />
                       <Link 
                         href={place.contact.website} 
                         target="_blank" 
@@ -128,7 +157,8 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                         underline="none"
                         sx={{
                           color: 'primary.main',
-                          fontSize: '0.875rem',
+                          fontSize: isMobile ? '0.8rem' : '0.875rem',
+                          wordBreak: 'break-word',
                           '&:hover': {
                             color: 'primary.dark'
                           }
@@ -142,15 +172,19 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
               </Grid>
             </Grid>
 
-            <Divider sx={{ my: 2 }} />
+            <Divider sx={{ my: isMobile ? 1 : 2 }} />
 
             <Box>
               <Chip
-                icon={<InfoIcon sx={{ fontSize: '1rem' }} />}
+                icon={<InfoIcon sx={{ fontSize: isMobile ? '1rem' : '1.2rem' }} />}
                 label="Services"
                 color="primary"
                 size="small"
-                sx={{ mb: 1, fontWeight: 'medium' }}
+                sx={{ 
+                  mb: 1, 
+                  fontWeight: 'medium',
+                  fontSize: isMobile ? '0.75rem' : '0.875rem'
+                }}
               />
               <Typography 
                 variant="body2" 
@@ -161,8 +195,9 @@ export const MeetingPlaceMarker: React.FC<MeetingPlaceMarkerProps> = ({ place })
                   borderRadius: 1,
                   borderLeft: '3px solid',
                   borderColor: 'primary.main',
-                  maxHeight: '100px',
-                  overflowY: 'auto'
+                  maxHeight: isMobile ? '80px' : '100px',
+                  overflowY: 'auto',
+                  fontSize: isMobile ? '0.8rem' : '0.875rem'
                 }}
               >
                 {place.services}
